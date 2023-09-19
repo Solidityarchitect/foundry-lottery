@@ -1,66 +1,92 @@
-## Foundry
+# Foundry Smart Contract Lottery
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+![Alt text](image.png)
 
-Foundry consists of:
+Contract CODE: https://sepolia.etherscan.io/address/0x82ea2f9022769c01a1d884321aa2bb72a79f872b#code
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Quickstart
 
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+```
+git clone https://github.com/Solidityarchitect/foundry-lottery
+cd foundry-lottery
+forge build
 ```
 
-### Test
+# Usage
 
-```shell
-$ forge test
+## Start a local node
+
+```
+make anvil
 ```
 
-### Format
+## Library
 
-```shell
-$ forge fmt
+If you're having a hard time installing the chainlink library, you can optionally run this command.
+
+```
+forge install smartcontractkit/chainlink-brownie-contracts@0.6.1 --no-commit
 ```
 
-### Gas Snapshots
+## Deploy
 
-```shell
-$ forge snapshot
+This will default to your local node. You need to have it running in another terminal in order for it to deploy.
+
+```
+make deploy
 ```
 
-### Anvil
+## Deploy - Other Network
 
-```shell
-$ anvil
+[See below](#deployment-to-a-testnet-or-mainnet)
+
+## Testing
+
+We talk about 4 test tiers in the video.
+
+1. Unit
+2. Integration
+3. Forked
+4. Staging
+
+This repo we cover #1 and #3.
+
+```
+forge test
 ```
 
-### Deploy
+or
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```
+forge test --fork-url $SEPOLIA_RPC_URL
 ```
 
-### Cast
+### Test Coverage
 
-```shell
-$ cast <subcommand>
+```
+forge coverage
 ```
 
-### Help
+# Proveably Random Raffle Contracts
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## About
+
+This code is create a proveably random smart contract lottery.
+
+## What we want it to do?
+
+1. User can enter by paying for ticket
+   1. The ticket fees are going to go to the winner during the draw
+2. After X period of time, the lottery will automatically draw a winner
+   1. And this will be done propramtically
+3. Using Chainlink VRF & Chainlink Autimation
+   1. Chainlink VRF -> Randomness
+   2. Chainlink Automation -> Time base trigger
+
+## Test
+
+1. Write some deploy scripts
+2. write our tests
+   1. Work on a local chain
+   2. Forked Testnet
+   3. Forked Mainnet
